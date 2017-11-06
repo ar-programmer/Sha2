@@ -78,24 +78,24 @@ public class Calendar extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("yyyy");
         Date today = java.util.Calendar.getInstance().getTime();
         reportDateYear = df.format(today);
-        sharedPref.edit().putString("tomato5" + i, reportDateYear).apply();
+        sharedPref.edit().putString("yearo" + i, reportDateYear).apply();
 
 
         DateFormat dfm = new SimpleDateFormat("MM");
         Date todayM = java.util.Calendar.getInstance().getTime();
         reportDateMonth = dfm.format(todayM);
-        sharedPref.edit().putString("tomato6" + i, reportDateMonth).apply();
+        sharedPref.edit().putString("montho" + i, reportDateMonth).apply();
 
 
         DateFormat dfd = new SimpleDateFormat("d");
         Date todayD = java.util.Calendar.getInstance().getTime();
         reportDateDay = dfd.format(todayD);
-        sharedPref.edit().putString("tomato21" + i, reportDateDay).apply();
+        sharedPref.edit().putString("tomato23" + i, reportDateDay).apply();
 
 
-        String stringDateY = sharedPref.getString("tomato5" + i, null);
-        String stringDateM = sharedPref.getString("tomato6" + i, null);
-        String stringDateD = sharedPref.getString("tomato21" + i, null);
+        String stringDateY = sharedPref.getString("yearo" + i, null);
+        String stringDateM = sharedPref.getString("montho" + i, null);
+        String stringDateD = sharedPref.getString("tomato23" + i, null);
 
         int year = Integer.parseInt(stringDateY);
 
@@ -104,6 +104,9 @@ public class Calendar extends AppCompatActivity {
         int month = Integer.parseInt(stringDateM) - 1;
 
         System.out.println(month);
+
+
+        System.out.println(i);
 
 
         //   System.out.println(day);
@@ -123,19 +126,22 @@ public class Calendar extends AppCompatActivity {
 
         while (stringDateD != null) {
             checkin = sharedPref.getBoolean("keyo " + c, false);  //save wheather smiley or angry
-            stringDateD = sharedPref.getString("tomato21" + i, null);
+            stringDateD = sharedPref.getString("tomato23" + i, null);
             if (stringDateD == null) {
 
             } else {
 
                 System.out.println(stringDateD);
-                int k = 0;
+
+
+                int k = 0;  // not to sure if this has to be here???
 
 
                 if (checkin == true) {
 
 
                     int day = Integer.parseInt(stringDateD);
+                    System.out.println("printing out day    "   + day);
                     CalendarDay calendarDay = CalendarDay.from(year, month, day);
                     dates.add(calendarDay);
 

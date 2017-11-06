@@ -17,8 +17,11 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Calendar;
 import java.util.concurrent.RecursiveTask;
@@ -35,13 +38,25 @@ public class AddDate extends AppCompatActivity {
 
     DatePicker myDatePicker;
 
+    String reportDateDay;
+
+    String reportDateYear;
+
+    String reportDateMonth;
+
+    int i = 0;
+
+    int c = 0;
+
     DatePickerDialog.OnDateSetListener mDateSetListener;
 
     DatePicker.OnDateChangedListener onDateChangedListener;
 
+
+
 //    int c = 0;
 
-//    Boolean checkin;
+    Boolean checkin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +64,14 @@ public class AddDate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_date);
 
+
+
+        SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+        i = sharedPref.getInt("loud", 0);
+
+        i++;
+
+        sharedPref.edit().putInt("loud", i).apply();
 
         //    SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
         //    checkin = sharedPref.getBoolean("keyo " + c, false);
@@ -91,7 +114,9 @@ public class AddDate extends AppCompatActivity {
 
         System.out.println("TEST " + year_x + month_x + day_x);
 
-        MaterialCalendarView materialCalendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+    }
+
+
 
 
  /*   if (checkin == true) {
@@ -108,15 +133,53 @@ public class AddDate extends AppCompatActivity {
         }
     }  */
 
-    }
+
 
     public void onCheckBoxClick(View view) {
 
-      CheckBox  checkBox = (CheckBox) findViewById(R.id.checkBox);
+
+        CheckBox  checkBox = (CheckBox) findViewById(R.id.checkBox);
 
         if (checkBox.isChecked() == true) {
 
 
+        SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+
+
+        c = sharedPref.getInt("nuevo", 0);  // get stored int Value
+
+        c++;                                   // add one to the stored Value
+
+        sharedPref.edit().putInt("nuevo", c).apply();   // save the new value
+
+
+
+        String key = "keyo " + c;
+        sharedPref.edit()
+                .putBoolean(key, true)
+                .apply();
+
+
+
+         //   DateFormat df = new SimpleDateFormat("yyyy");
+         //   int today = year_x;
+            reportDateYear = Integer.toString(year_x);
+            sharedPref.edit().putString("yearo" + i, reportDateYear).apply();
+
+
+           // DateFormat dfm = new SimpleDateFormat("MM");
+          //  int todayM = month_x;
+            reportDateMonth = Integer.toString(month_x);
+            sharedPref.edit().putString("montho" + i, reportDateMonth).apply();
+
+
+           // DateFormat dfd = new SimpleDateFormat("d");
+          //  int todayD =
+            reportDateDay =   Integer.toString(day_x);
+            sharedPref.edit().putString("tomato23" + i, reportDateDay).apply();
+
+
+            System.out.println("TEST " + i + "  " + reportDateDay + "   " +reportDateMonth + "    " + reportDateYear);
         }
 
 
