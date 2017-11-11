@@ -14,11 +14,12 @@
         android:icon="@drawable/plus_icon"
         app:showAsAction="always"/>
 
-    <DatePicker android:id="@+id/f"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <item android:id="@+id/menu_trash"
+        android:title="Delete all values"
+        android:icon="@drawable/trash"
+        app:showAsAction="always"/>
 
-        />
+
 
 
 
