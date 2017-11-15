@@ -232,4 +232,22 @@ public class AddDate extends AppCompatActivity {
         }
 
 
+    @Override
+    public void onBackPressed()
+    {
+        CheckBox  falsecheckBox = (CheckBox) findViewById(R.id.falseCheckBox);
+        CheckBox  checkBox = (CheckBox) findViewById(R.id.checkBox);
+        // code here to show dialog
+        super.onBackPressed();
+        if (falsecheckBox.isChecked() == false && checkBox.isChecked() == false ) {
+            i--;
+            System.out.println("I Love you !!!");
+            SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+            sharedPref.edit().putInt("loud", i).apply();
+
+        }
+     // optional depending on your needs
+    }
+
+
     }

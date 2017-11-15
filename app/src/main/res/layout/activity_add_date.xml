@@ -1,60 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:columnCount="1"
-    android:rowCount="3">
 
+    android:background="@drawable/table2"
+    >
+
+    <TextView
+
+     android:layout_gravity="center_horizontal"
+            android:text="Did you make it ???"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorWhite"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+
+        <TextView
+            android:id="@+id/yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+
+            />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+        <TextView
+
+            android:id="@+id/no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+
+          />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="50dp"
+        >
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+        <CheckBox
+            android:layout_below="@+id/yes"
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:onClick="onCheckBoxClick"
+
+            />
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+        <CheckBox
+
+            android:layout_below="@+id/no"
+            android:id="@+id/falseCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:onClick="onCheckBoxClick"
+
+            />
+
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+    </LinearLayout>
 
 <DatePicker
+
+    android:layout_below="@+id/falseCheckBox"
     android:id="@+id/date_picker"
     android:spinnersShown="true"
     android:calendarViewShown="false"
     android:layout_width="match_parent"
-    android:layout_height="387dp"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     />
 
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/date_picker"
-        android:layout_centerHorizontal="true"
-        android:columnCount="2"
-        android:rowCount="3">
-
-        <TextView
-            android:layout_columnSpan="2"
-            android:text="Did you make it ???"/>
-
-        <TextView
-
-            android:text="Yes"/>
-
-        <TextView
-            android:text="     No"/>
-
-
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:onClick="onCheckBoxClick"
- />
-
-    <CheckBox
-        android:id="@+id/falseCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:onClick="onCheckBoxClick"
-        />
-
 
     </GridLayout>
-
 
     <!--Button
         android:id="@+id/button"
@@ -67,4 +125,3 @@
 
 
 
-</RelativeLayout>
