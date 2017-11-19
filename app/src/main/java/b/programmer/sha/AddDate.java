@@ -6,7 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddDate extends AppCompatActivity {
 
@@ -31,6 +36,8 @@ public class AddDate extends AppCompatActivity {
     int c = 0;
 
     boolean afterAddDate;
+     CheckBox checkBox = null;
+     CheckBox falsecheckBox = null;
 
 
     DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -47,26 +54,6 @@ public class AddDate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_date);
 
-        SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
-
-        c = sharedPref.getInt("nuevo", 0);  // get stored int Value
-
-        c++;
-      // add one to the stored Value
-
-        sharedPref.edit().putInt("nuevo", c).apply();   // save the new value
-
-
-        i = sharedPref.getInt("loud", 0);
-
-
-        System.out.println("After getting i value    " + i);
-
-        i++;
-
-
-
-        sharedPref.edit().putInt("loud", i).apply();
 
         final java.util.Calendar c = java.util.Calendar.getInstance();
         int year = c.get(java.util.Calendar.YEAR);
@@ -94,17 +81,51 @@ public class AddDate extends AppCompatActivity {
         myDatePicker = (DatePicker) findViewById(R.id.date_picker);
         myDatePicker.init(year, month, day, dateSetListener);
 
-
     }
 
+
     public void onCheckBoxClick(View view) {
+
+
+
         SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+
+
+
+        c = sharedPref.getInt("nuevo", 0);  // get stored int Value
+
+        c++;
+        // add one to the stored Value
+
+        sharedPref.edit().putInt("nuevo", c).apply();   // save the new value
+
+
+        i = sharedPref.getInt("loud", 0);
+
+
+        System.out.println("After getting i value    " + i);
+
+        i++;
+
+
+
+        sharedPref.edit().putInt("loud", i).apply();
+
+
+
+
+
+
+
+
+        falsecheckBox = (CheckBox) findViewById(R.id.falseCheckBox);
+        checkBox = (CheckBox) findViewById(R.id.checkBox);
+
+
 
         sharedPref.edit().putBoolean("afterAddDate", true).apply();
 
 
-        CheckBox  falsecheckBox = (CheckBox) findViewById(R.id.falseCheckBox);
-        CheckBox  checkBox = (CheckBox) findViewById(R.id.checkBox);
 
 
 
@@ -117,30 +138,124 @@ public class AddDate extends AppCompatActivity {
                     falsecheckBox.setEnabled(false);
 
 
-
-
-
-           /*         c = sharedPref.getInt("nuevo", 0);  // get stored int Value
-
-                                      // add one to the stored Value
-
-                    sharedPref.edit().putInt("nuevo", c).apply();   // save the new value */
-
-
-
                      key = "keyo " + c;
 
                     value = true;
 
 
-                    sharedPref.edit()
+
+
+                }else{
+                    checkBox.setEnabled(true);
+                    falsecheckBox.setEnabled(true);
+
+                }
+                break;
+
+            case R.id.falseCheckBox:
+                if(falsecheckBox.isChecked()) {
+                    checkBox.setEnabled(false);
+
+                    value = false;
+
+                   key = "keyo " + c;
+
+
+
+                } else {
+
+                    checkBox.setEnabled(true);
+                    falsecheckBox.setEnabled(true);
+
+
+                }
+                break;
+
+        }
+
+
+        }
+
+
+    public void onConfirmButtonClick(View view) {
+
+
+        System.out.println(reportDateDay + "    der berüchtigte tag");
+
+        SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+
+/*
+        i--;
+        sharedPref.edit().putInt("loud", i).apply();
+        String reportDate = sharedPref.getString("tomato23" + i, null);
+
+        System.out.println(reportDate + "    der berüchtigte tag");
+
+
+        try {
+
+            if (reportDateDay.equals(reportDate)) {
+
+                System.out.println("hallelujah");
+                System.out.println(reportDateDay);
+                System.out.println(reportDate);
+                c--;
+                sharedPref.edit().putInt("nuevo", c).apply();
+                i--;
+                sharedPref.edit().putInt("loud", i).apply();
+
+
+                //     sharedPref.edit().putBoolean("goneBackToDate", true).apply();
+
+            }
+
+            else {
+                Toast.makeText(this, "You can not introduce a lalala",
+                        Toast.LENGTH_LONG).show();
+            }
+
+
+        } catch (NullPointerException e){
+
+            Toast.makeText(this, "You can not introduce a lalala",
+                    Toast.LENGTH_LONG).show();
+            System.out.println("CAUGHT U ");
+        }
+
+
+
+
+        i++;
+        sharedPref.edit().putInt("loud", i).apply();
+
+
+*/
+
+
+
+
+
+
+        falsecheckBox.setChecked(false);
+        checkBox.setChecked(false);
+        falsecheckBox.setEnabled(true);
+        checkBox.setEnabled(true);
+
+    //    SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+
+
+
+
+
+
+
+
+        sharedPref.edit()
                             .putBoolean(key, value)
                             .apply();
 
 
-
-
-                    reportDateYear = Integer.toString(year_x);
+                 reportDateYear = Integer.toString(year_x);
                     sharedPref.edit().putString("yearo" + i, reportDateYear).apply();
 
 
@@ -155,81 +270,95 @@ public class AddDate extends AppCompatActivity {
                     System.out.println("TEST " + i + "  " + reportDateDay + "   " +reportDateMonth + "    " + reportDateYear);
 
 
-                }else{
-                    checkBox.setEnabled(true);
-                    falsecheckBox.setEnabled(true);
 
-                }
-                break;
 
-            case R.id.falseCheckBox:
-                if(falsecheckBox.isChecked()) {
-                    checkBox.setEnabled(false);
+ System.out.println(reportDateDay + "    der berüchtigte tag");
 
 
 
 
 
-           /*         c = sharedPref.getInt("nuevo", 0);  // get stored int Value
 
-                                       // add one to the stored Value
-
-                    sharedPref.edit().putInt("nuevo", c).apply();   // save the new value  */
-
-
-
-            /*        String key = "keyo " + c;
-                    sharedPref.edit()
-                            .putBoolean(key, false)
-                            .apply();  */
-
-
-
-                    value = false;
-
-                   key = "keyo " + c;
-
-                    sharedPref.edit()
-                            .putBoolean(key, value)
-                            .apply();
-
-
-                    reportDateYear = Integer.toString(year_x);
-                    sharedPref.edit().putString("yearo" + i, reportDateYear).apply();
-
-
-
-                    reportDateMonth = Integer.toString(month_x +1);
-                    sharedPref.edit().putString("montho" + i, reportDateMonth).apply();
-
-
-
-                    reportDateDay =   Integer.toString(day_x);
-                    sharedPref.edit().putString("tomato23" + i, reportDateDay).apply();
-
-
-                    System.out.println("TEST " + i + "  " + reportDateDay + "   " +reportDateMonth + "    " + reportDateYear + "c" + c);
+/*
 
 
 
 
-                } else {
+        String stringDateD = sharedPref.getString("tomato23" + i, null);
 
-                    checkBox.setEnabled(true);
-                    falsecheckBox.setEnabled(true);
+        i = sharedPref.getInt("loud", 0);
 
 
-                }
-                break;
+        System.out.println("After getting i value    " + i);
+
+        i--;
+
+
+
+        sharedPref.edit().putInt("loud", i).apply();
+
+
+        String reportDate = sharedPref.getString("tomato23" + i, null);
+
+
+
+
+
+        //    DateFormat dfd = new SimpleDateFormat("d");
+        //  Date todayD = java.util.Calendar.getInstance().getTime();
+
+        //  String reportDateDay = dfd.format(todayD);
+        //   System.out.println("reportDateDay  " + reportDateDay);
+
+        System.out.println("StringDate  " + stringDateD);
+
+
+        try {
+
+            if (stringDateD.equals(reportDate)) {
+
+                System.out.println("hallelujah");
+                System.out.println(dateAgain);
+                System.out.println(reportDate);
+                c--;
+                sharedPref.edit().putInt("nuevo", c).apply();
+                i--;
+                sharedPref.edit().putInt("loud", i).apply();
+
+
+                //     sharedPref.edit().putBoolean("goneBackToDate", true).apply();
+
+            }
+
+            else {
+                Toast.makeText(this, "You can not introduce a lalala",
+                        Toast.LENGTH_LONG).show();
+            }
+
+
+        } catch (NullPointerException e){
+
+            Toast.makeText(this, "You can not introduce a lalala",
+                    Toast.LENGTH_LONG).show();
+            System.out.println("CAUGHT U ");
         }
 
 
 
 
-        System.out.println(key + value);
+
+*/
 
 
-        }
+
+
+
+    }
+
+
+
+
+
 
 
     @Override
@@ -239,14 +368,38 @@ public class AddDate extends AppCompatActivity {
         CheckBox  checkBox = (CheckBox) findViewById(R.id.checkBox);
         // code here to show dialog
         super.onBackPressed();
-        if (falsecheckBox.isChecked() == false && checkBox.isChecked() == false ) {
-            i--;
-            System.out.println("I Love you !!!");
-            SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
-            sharedPref.edit().putInt("loud", i).apply();
+        SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
 
+        sharedPref.edit().putBoolean("goneBackToDate", true).apply();
+        Boolean setI = sharedPref.getBoolean("setI", false);
+        String dateAgain = sharedPref.getString("dateAgain", null);
+        if (setI == true) {
+
+                DateFormat dfd = new SimpleDateFormat("d");
+                Date todayD = java.util.Calendar.getInstance().getTime();
+
+                String reportDateDay = dfd.format(todayD);
+                System.out.println("reportDateDay  " + reportDateDay);
+
+                System.out.println("dateAgain  " + dateAgain);
+
+
+                try {
+                    if (dateAgain.equals(reportDateDay)) {
+
+
+                Toast.makeText(this, "YOU CAN NOT CHANGE A VALUE AFTER HAVING ADDED A NEW DATE",
+                        Toast.LENGTH_LONG).show();
+                MainActivity.falsecheckBox.setChecked(false);
+                MainActivity.checkBox.setChecked(false);
+                MainActivity.falsecheckBox.setEnabled(false);
+                MainActivity.checkBox.setEnabled(false);
+            } }catch (NullPointerException e){
+                System.out.println("Caught u too :)");
+            }
         }
-     // optional depending on your needs
+
+
     }
 
 

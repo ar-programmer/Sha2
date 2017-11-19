@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPref.edit().putInt("nuevo", c).apply();   // save the new value   */
 
+
+
+
     }
 
 
@@ -168,7 +171,7 @@ System.out.println("key und value    "   +  key + value);
 */
 
 
-  @Override
+/*  @Override
 public void onResume() {
     super.onResume();
 
@@ -226,18 +229,88 @@ try {
 
     }
 }
-
+*/
 
 
 // On checkBoxClick wird beim zweiten Mal 2 Mal durchlaufen beim ersten aber nur einmal oder ????
 
     // Ich meine der erste Klick wird noch registriet es muss ausgecklickt werden zum ende der Methde!?
 
+
+
+
+
+    // if Date afterwards added w
+
     public void onCheckBoxClick(View view) {
 
 
         SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
 
+        Boolean setI = sharedPref.getBoolean("setI", false);
+        String dateAgain = sharedPref.getString("dateAgain", null);
+
+
+    //    if (setI == true) {
+
+
+// iv.setImageResource(0);
+
+
+            int i = sharedPref.getInt("loud", 0);
+            String stringDateD = sharedPref.getString("tomato23" + i, null);
+
+
+            DateFormat dfd = new SimpleDateFormat("d");
+            Date todayD = java.util.Calendar.getInstance().getTime();
+
+            String reportDateDay = dfd.format(todayD);
+            System.out.println("reportDateDay  " + reportDateDay);
+
+            System.out.println("dateAgain  " + dateAgain);
+
+            if (reportDateDay.equals(stringDateD)) {
+
+
+                // sharedPref.edit().putInt("loud", 0).apply();
+
+
+                System.out.println("I Love you !!!Main   " + i);
+            }
+
+            try {
+                if (dateAgain.equals(reportDateDay)) {
+
+                    System.out.println("hallelujah");
+                    System.out.println(dateAgain);
+                    System.out.println(reportDateDay);
+                    c--;
+                    sharedPref.edit().putInt("nuevo", c).apply();
+                    i--;
+                    sharedPref.edit().putInt("loud", i).apply();
+
+
+               //     sharedPref.edit().putBoolean("goneBackToDate", true).apply();
+
+                }
+
+                else {
+                    Toast.makeText(this, "You can not introduce a lalala",
+                            Toast.LENGTH_LONG).show();
+                }
+
+
+            } catch (NullPointerException e){
+
+                Toast.makeText(this, "You can not introduce a lalala",
+                        Toast.LENGTH_LONG).show();
+                System.out.println("CAUGHT U ");
+            }
+
+            System.out.println(dateAgain);
+            System.out.println(reportDateDay);
+
+      //  }
 
         c = sharedPref.getInt("nuevo", 0);  // get stored int Value
 
@@ -247,11 +320,11 @@ try {
 
 
 
+System.out.println("C MAIN ACT   " + c);
 
 
 
 
-        Boolean setI = sharedPref.getBoolean("setI", false);
 
 
 

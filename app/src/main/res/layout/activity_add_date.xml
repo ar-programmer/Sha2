@@ -112,6 +112,24 @@
     />
 
 
+
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_below="@+id/date_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onConfirmButtonClick"
+        android:text="confirm"
+        android:textColor="@color/colorWhite"
+
+        />
+
+
+
+
+
+
+
     </GridLayout>
 
     <!--Button

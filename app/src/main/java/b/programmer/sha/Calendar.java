@@ -203,12 +203,33 @@ public class Calendar extends AppCompatActivity {
         if (use == true) {
 
 
+     /*       Boolean goneBackToDate = sharedPref.getBoolean("goneBackToDate", false);
+
+            if (goneBackToDate == true){
+
+
+                System.out.println("just adede ii          "  +  i);
+
+                i++;
+                i++;
+
+                System.out.println("just adede ii22          "  +  i);
+                System.out.println("just adede cc          "  +  c);
+
+                c++;
+                c++;
+
+                System.out.println("just adede cc 22         "  +  c);
+
+
+                sharedPref.edit().putBoolean("goneBackToDate", false).apply();
+            }   */
+
+
             message2 = intent.getBooleanExtra("output", false);
 
 
-            c = sharedPref.getInt("nuevo", 0);
 
-            value = sharedPref.getBoolean("keyo " + c, false);
 
             i = sharedPref.getInt("loud", 0);
 
@@ -227,6 +248,9 @@ public class Calendar extends AppCompatActivity {
                 c++;   //  wenn nach dem einsetzen gedrückt wird.
 
             }
+            c = sharedPref.getInt("nuevo", 0);
+
+            value = sharedPref.getBoolean("keyo " + c, false);
 
             sharedPref.edit().putInt("loud", i).apply();
 
@@ -278,9 +302,17 @@ public class Calendar extends AppCompatActivity {
 
             while (stringDateD != null) {
 
+
+
+
+
+
+
                 System.out.println("i second time  " + i);
 
-                System.out.println("stringDateI" + stringDateD);
+
+
+                System.out.println("stringDateIstringDateIstringDateI   " + stringDateD);
 
 
 
@@ -335,6 +367,15 @@ public class Calendar extends AppCompatActivity {
 
                     }  /*
                     }  */
+
+
+
+
+
+
+
+
+
 
                 }
 
@@ -435,7 +476,10 @@ public class Calendar extends AppCompatActivity {
 
         SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
         sharedPref.edit().putBoolean("setI", true).apply();
+     String    stringDateD = sharedPref.getString("tomato23" + i, null);
 
+
+        System.out.println(stringDateD);
 
 
 try {
