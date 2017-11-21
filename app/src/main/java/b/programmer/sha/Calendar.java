@@ -1,14 +1,22 @@
 package b.programmer.sha;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -90,8 +98,28 @@ public class Calendar extends AppCompatActivity {
 
         // sharedPref.edit().putInt("loud", i).apply();  THIS WAS THE MISTAKE PLEASE LOOK AT!!
 
+         String userText = "";
+
+        final EditText input = new EditText(this);
 
         if (use == false) {
+
+
+            MaterialCalendarView materialCalendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+
+
+
+materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+    @Override
+    public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+        System.out.println("lulu");
+
+        TextView txt = (TextView) findViewById(R.id.textView);
+
+        txt.setText(input.getText().toString());
+
+    }
+});
 
             //     c--;
             i--;
@@ -105,7 +133,7 @@ public class Calendar extends AppCompatActivity {
             Boolean regenbogen = sharedPref.getBoolean("sol" + a, false);
             Boolean row5 = sharedPref.getBoolean("row" + c, false);
 
-            MaterialCalendarView materialCalendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+
 
             HashSet<CalendarDay> dates = new HashSet<CalendarDay>();
             HashSet<CalendarDay> dates2 = new HashSet<CalendarDay>();
@@ -340,6 +368,47 @@ public class Calendar extends AppCompatActivity {
                         EventDecorator2 eventDecorator = new EventDecorator2(getResources().getColor(R.color.colorGreen), dates, this);
                         materialCalendarView.addDecorator(eventDecorator);
 
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 20s
+                                // Write your code to display AlertDialog here
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Calendar.this);
+                        builder.setMessage("Congratukations you Made it!")
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent j=new Intent(Calendar.this, FirstAcivity.class);  // Warum funktioniert hier nicht nur ledglich THIS ANZUGEBEN?
+                                        //       j.putExtra("output", newValue);
+
+
+                                        j.putExtra("use",true);
+                                        startActivity(j);
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                            }
+                        }, 2000);
+                 /*       new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+
+
+
+
+                                Intent j=new Intent(Calendar.this, FirstAcivity.class);  // Warum funktioniert hier nicht nur ledglich THIS ANZUGEBEN?
+                                //       j.putExtra("output", newValue);
+
+
+                                j.putExtra("use",true);
+                                startActivity(j);
+                            }
+                        }, 2500);  */
+
 
                     } else {
 
@@ -356,7 +425,30 @@ public class Calendar extends AppCompatActivity {
 
                         //     materialCalendarView.addDecorator(new CurrentDateDecorator(this));
 
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 20s
+                                // Write your code to display AlertDialog here
 
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Calendar.this);
+                                builder.setMessage("Marta te quiero!  Dont give up")
+                                        .setCancelable(false)
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                Intent j=new Intent(Calendar.this, FirstAcivity.class);  // Warum funktioniert hier nicht nur ledglich THIS ANZUGEBEN?
+                                                //       j.putExtra("output", newValue);
+
+
+                                                j.putExtra("use",true);
+                                                startActivity(j);
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                alert.show();
+                            }
+                        }, 2000);
                     }
 
 
