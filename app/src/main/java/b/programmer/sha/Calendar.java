@@ -7,12 +7,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.applandeo.materialcalendarview.EventDay;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
@@ -21,6 +27,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -28,7 +36,16 @@ import java.util.HashSet;
  */
 
 public class Calendar extends AppCompatActivity {
+    String     samba2, samba3;
+    boolean addText = false;
+    int year_x, month_x, day_x;
+    String samba , diJaneiro, miJaneiro;
+    String koko, moko;
 
+    String hString;
+    String workPlease;
+
+    int increment;
     boolean value = true;
 
     boolean balance = true;
@@ -57,6 +74,7 @@ public class Calendar extends AppCompatActivity {
 
     boolean afterAddDate;
 
+    static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +82,7 @@ public class Calendar extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calender);
+
 
         Intent intent = getIntent();
 
@@ -78,6 +97,12 @@ public class Calendar extends AppCompatActivity {
 
 
         SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+
+
+        int increment =   sharedPref.getInt("increment", 0);
+
+        System.out.println("huhu" + increment);
+
 
         c = sharedPref.getInt("nuevo", 0);
 
@@ -98,9 +123,12 @@ public class Calendar extends AppCompatActivity {
 
         // sharedPref.edit().putInt("loud", i).apply();  THIS WAS THE MISTAKE PLEASE LOOK AT!!
 
-         String userText = "";
+        String userText = "";
 
         final EditText input = new EditText(this);
+
+
+
 
         if (use == false) {
 
@@ -109,126 +137,335 @@ public class Calendar extends AppCompatActivity {
 
 
 
-materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+
+/*  materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        System.out.println("lulu");
 
-        TextView txt = (TextView) findViewById(R.id.textView);
+        SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+        TextView textView = (TextView)findViewById(R.id.showText);
 
-        txt.setText(input.getText().toString());
+        int increment =   sharedPref.getInt("increment", 0);
+
+
+
+
+
+        if(increment == 1) {
+
+             koko = String.valueOf(date);
+            sharedPref.edit().putString("BeforeIncrementdate", koko).apply();
+             samba = sharedPref.getString("BeforeIncrementdate", null);
+
+
+            diJaneiro = sharedPref.getString("textBefore" + increment, null);
+
+
+
+            System.out.println(samba + "     I am koko");
+            System.out.println(diJaneiro + "     I am diJaneiro");
+
+            textView.setText(diJaneiro);
+
+        } else {
+            textView.setText(null);
+        }
+
+        System.out.println(" String value of date        "     +String.valueOf(date));
+        System.out.println(" koko jambo        "     + koko);
+
+        if (String.valueOf(date).equals(koko)){
+            System.out.println("HelloAgain");
+            textView.setText(diJaneiro);
+        }
+
+        // YOU HAVE TO PROGRAMM   IF  A NEW DAY IS CLICKED THAT DOES NOT MATCH THE SAVED ONE INCREMENT
+
+
+         addText = true;
+
+
+
+        increment++;
+
+
+        sharedPref.edit().putInt("increment", increment).apply();
+
+
+        int intText = sharedPref.getInt("intText", 0);
+
+        System.out.println(intText + "       what is it????????" );
+
+         String toto   = String.valueOf(date);
+       sharedPref.edit().putString("AfterIncrementdate" + increment, toto).apply();     // the date gets saved
+
+
+        System.out.println("I am afterIncrement   " + toto);
+
+
+
+   //     String dateToSaveText = sharedPref.getString("toto" + increment, null);
+        //  System.out.println(dateToSaveText);
+
+        System.out.println(increment);
+
+
+
+
+//        HashSet<CalendarDay> day = new HashSet<CalendarDay>();
+
+  //      day.add(date);
+
+            //    if (intText == increment){
+
+        String text = sharedPref.getString("text" + intText, null);         // you get the introduced text
+
+        String pupu = sharedPref.getString("AfterIncrementdate" + increment, null);
+        if (toto == pupu) {
+
+            increment--;
+
+                 // you have the date
+
+
+      //      textView.setText(text);
+
+        } else {
+    //        textView.setText(null);
+        }
+
+if (increment == 4) {
+
+    String mumu = sharedPref.getString("AfterIncrementdate" + increment, null);
+    String text2 = sharedPref.getString("text" + intText, null);
+
+
+ //   textView.setText(text2);
+
+}
+
+
+        // if you click on this date --- this text has to be show!!!
+
+
+
+        //    System.out.println(pupu + "this is pupu  !! ");
+
+
+
+
+
+           // date.equals(pupu);
+
+
+
+
+
+
+
+
+
+            System.out.println(date + "this is pupu 222 !! ");
+
+
 
     }
-});
-
-            //     c--;
-            i--;
-
-            System.out.println("I for the second time reaching Calendar" + i);
-
-            String stringDateY = sharedPref.getString("yearo" + i, null);
-            String stringDateM = sharedPref.getString("montho" + i, null);
-            String stringDateD = sharedPref.getString("tomato23" + i, null);
-            checkin = sharedPref.getBoolean("keyo " + c, false);
-            Boolean regenbogen = sharedPref.getBoolean("sol" + a, false);
-            Boolean row5 = sharedPref.getBoolean("row" + c, false);
+                                                  });     */
 
 
 
-            HashSet<CalendarDay> dates = new HashSet<CalendarDay>();
-            HashSet<CalendarDay> dates2 = new HashSet<CalendarDay>();
+            materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+                @Override
+                public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
 
-            while (stringDateD != null) {
+                    SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+                    TextView textView = (TextView) findViewById(R.id.showText);
 
-                regenbogen = sharedPref.getBoolean("sol" + a, false);
+                    int increment = sharedPref.getInt("increment", 0);
 
-                System.out.println(regenbogen);
-                checkin = sharedPref.getBoolean("keyo " + c, false);
-                regenbogen = sharedPref.getBoolean("sol" + a, false);//save wheather smiley or angry
-                stringDateD = sharedPref.getString("tomato23" + i, null);
-                stringDateY = sharedPref.getString("yearo" + i, null);
-                stringDateM = sharedPref.getString("montho" + i, null);
-                if (stringDateD == null) {
+                    if (increment == 1) {
 
-                } else {
-
-                    System.out.println(stringDateD);
-
-                    int k = 0;  // not to sure if this has to be here???
-
-                    if (checkin == true) {
-
-                        int month = Integer.parseInt(stringDateM) - 1;
-                        int year = Integer.parseInt(stringDateY);
-                        int day = Integer.parseInt(stringDateD);
-                        System.out.println("printing out day    " + day);
-                        CalendarDay calendarDay = CalendarDay.from(year, month, day);
-                        dates.add(calendarDay);
+                        koko = String.valueOf(date);
+                        sharedPref.edit().putString("BeforeIncrementdate", koko).apply();
+                        samba = sharedPref.getString("BeforeIncrementdate", null);
 
 
-                        System.out.println(checkin);
+                        diJaneiro = sharedPref.getString("textBefore" + increment, null);
 
 
-                        EventDecorator2 eventDecorator = new EventDecorator2(getResources().getColor(R.color.colorGreen), dates, this);
-                        materialCalendarView.addDecorator(eventDecorator);
+                        System.out.println(samba + "     I am koko");
+                        System.out.println(diJaneiro + "     I am diJaneiro");
 
-                    } else {
-
-
-                        int month = Integer.parseInt(stringDateM) - 1;
-                        int year = Integer.parseInt(stringDateY);
-                        int day = Integer.parseInt(stringDateD);
-                        CalendarDay calendarDay2 = CalendarDay.from(year, month, day);
-                        dates2.add(calendarDay2);
-
-                        System.out.println(checkin);
-                        EventDecorator eventDecorator2 = new EventDecorator(getResources().getColor(R.color.colorRed), dates2, this);
-                        materialCalendarView.addDecorator(eventDecorator2);
-
-
-                        //     materialCalendarView.addDecorator(new CurrentDateDecorator(this));
-
+                        textView.setText(diJaneiro);
 
                     }
 
 
-                    i--;
-                    c--;
-                    a--;
+                    if (increment == 3) {
+
+                        moko = String.valueOf(date);
+                        sharedPref.edit().putString("BeforeIncrementdate", moko).apply();
+                        samba = sharedPref.getString("BeforeIncrementdate", null);
 
 
-                    System.out.println("I for the third time end Schleife   " + i);
+                        miJaneiro = sharedPref.getString("textBefore" + increment, null);
+
+
+
+                        System.out.println(samba + "     I am koko");
+                        System.out.println(miJaneiro + "     I am diJaneiro");
+
+                        textView.setText(miJaneiro);
+
+                    } else {
+                        textView.setText(null);
+                    }
+
+                    System.out.println(" String value of date        " + String.valueOf(date));
+                    System.out.println(" koko jambo        " + koko);
+
+                    if (String.valueOf(date).equals(koko)) {
+                        System.out.println("HelloAgain");
+                        textView.setText(diJaneiro);
+                    }
+
+                    if (String.valueOf(date).equals(moko)) {
+                        System.out.println("HelloAgain");
+                        textView.setText(miJaneiro);
+                    }
+                    // YOU HAVE TO PROGRAMM   IF  A NEW DAY IS CLICKED THAT DOES NOT MATCH THE SAVED ONE INCREMENT
+
+
+                    addText = true;
+
+
+                    increment++;
+
+
+                    sharedPref.edit().putInt("increment", increment).apply();
+
+
+                } });
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //     c--;
+                i--;
+
+                System.out.println("I for the second time reaching Calendar" + i);
+
+                String stringDateY = sharedPref.getString("yearo" + i, null);
+                String stringDateM = sharedPref.getString("montho" + i, null);
+                String stringDateD = sharedPref.getString("tomato23" + i, null);
+                checkin = sharedPref.getBoolean("keyo " + c, false);
+                Boolean regenbogen = sharedPref.getBoolean("sol" + a, false);
+                Boolean row5 = sharedPref.getBoolean("row" + c, false);
+
+
+                HashSet<CalendarDay> dates = new HashSet<CalendarDay>();
+                HashSet<CalendarDay> dates2 = new HashSet<CalendarDay>();
+
+                while (stringDateD != null) {
+
+                    regenbogen = sharedPref.getBoolean("sol" + a, false);
+
+                    System.out.println(regenbogen);
+                    checkin = sharedPref.getBoolean("keyo " + c, false);
+                    regenbogen = sharedPref.getBoolean("sol" + a, false);//save wheather smiley or angry
+                    stringDateD = sharedPref.getString("tomato23" + i, null);
+                    stringDateY = sharedPref.getString("yearo" + i, null);
+                    stringDateM = sharedPref.getString("montho" + i, null);
+                    if (stringDateD == null) {
+
+                    } else {
+
+                        System.out.println(stringDateD);
+
+                        int k = 0;  // not to sure if this has to be here???
+
+                        if (checkin == true) {
+
+                            int month = Integer.parseInt(stringDateM) - 1;
+                            int year = Integer.parseInt(stringDateY);
+                            int day = Integer.parseInt(stringDateD);
+                            System.out.println("printing out day    " + day);
+                            CalendarDay calendarDay = CalendarDay.from(year, month, day);
+                            dates.add(calendarDay);
+
+
+                            System.out.println(checkin);
+
+
+                            EventDecorator2 eventDecorator = new EventDecorator2(getResources().getColor(R.color.colorGreen), dates, this);
+                            materialCalendarView.addDecorator(eventDecorator);
+
+                        } else {
+
+
+                            int month = Integer.parseInt(stringDateM) - 1;
+                            int year = Integer.parseInt(stringDateY);
+                            int day = Integer.parseInt(stringDateD);
+                            CalendarDay calendarDay2 = CalendarDay.from(year, month, day);
+                            dates2.add(calendarDay2);
+
+                            System.out.println(checkin);
+                            EventDecorator eventDecorator2 = new EventDecorator(getResources().getColor(R.color.colorRed), dates2, this);
+                            materialCalendarView.addDecorator(eventDecorator2);
+
+
+                            //     materialCalendarView.addDecorator(new CurrentDateDecorator(this));
+
+
+                        }
+
+
+                        i--;
+                        c--;
+                        a--;
+
+
+                        System.out.println("I for the third time end Schleife   " + i);
+                    }
+
                 }
+
+
+                i--;
+
 
             }
 
 
-            i--;
+            boolean value = true;
+
+            boolean balance = true;
+            String stringDate;
+
+            String stringDate2;
+
+            Date date = new Date();
+
+            int i = 0;
+
+            int c = 0;
+
+            String reportDateYear;
+            String reportDateMonth;
+            String reportDateDay;
+            boolean message2;
 
 
-        }
-
-
-        boolean value = true;
-
-        boolean balance = true;
-        String stringDate;
-
-        String stringDate2;
-
-        Date date = new Date();
-
-        int i = 0;
-
-        int c = 0;
-
-        String reportDateYear;
-        String reportDateMonth;
-        String reportDateDay;
-        boolean message2;
-
-
-        if (use == true) {
+            if (use == true) {
 
 
      /*       Boolean goneBackToDate = sharedPref.getBoolean("goneBackToDate", false);
@@ -254,144 +491,134 @@ materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             }   */
 
 
-            message2 = intent.getBooleanExtra("output", false);
+                message2 = intent.getBooleanExtra("output", false);
 
 
+                i = sharedPref.getInt("loud", 0);
 
 
-            i = sharedPref.getInt("loud", 0);
+                Boolean setI = sharedPref.getBoolean("setI", false);
 
 
-            Boolean setI = sharedPref.getBoolean("setI", false);
-
-
-      //      if (setI == true) {
+                //      if (setI == true) {
                 i++;
-      //      }
+                //      }
 
-            System.out.println("i first time  " + i);
-            afterAddDate = sharedPref.getBoolean("afterAddDate", false);
+                System.out.println("i first time  " + i);
+                afterAddDate = sharedPref.getBoolean("afterAddDate", false);
 
-            if (afterAddDate == true) {
-                c++;   //  wenn nach dem einsetzen gedrückt wird.
+                if (afterAddDate == true) {
+                    c++;   //  wenn nach dem einsetzen gedrückt wird.
 
-            }
-            c = sharedPref.getInt("nuevo", 0);
+                }
+                c = sharedPref.getInt("nuevo", 0);
 
-            value = sharedPref.getBoolean("keyo " + c, false);
+                value = sharedPref.getBoolean("keyo " + c, false);
 
-            sharedPref.edit().putInt("loud", i).apply();
-
-
-            DateFormat df = new SimpleDateFormat("yyyy");
-            Date today = java.util.Calendar.getInstance().getTime();
-            reportDateYear = df.format(today);
-            sharedPref.edit().putString("yearo" + i, reportDateYear).apply();
+                sharedPref.edit().putInt("loud", i).apply();
 
 
-            DateFormat dfm = new SimpleDateFormat("MM");
-            Date todayM = java.util.Calendar.getInstance().getTime();
-            reportDateMonth = dfm.format(todayM);
-            sharedPref.edit().putString("montho" + i, reportDateMonth).apply();
+                DateFormat df = new SimpleDateFormat("yyyy");
+                Date today = java.util.Calendar.getInstance().getTime();
+                reportDateYear = df.format(today);
+                sharedPref.edit().putString("yearo" + i, reportDateYear).apply();
 
 
-            DateFormat dfd = new SimpleDateFormat("d");
-            Date todayD = java.util.Calendar.getInstance().getTime();
-            reportDateDay = dfd.format(todayD);
-            sharedPref.edit().putString("tomato23" + i, reportDateDay).apply();
+                DateFormat dfm = new SimpleDateFormat("MM");
+                Date todayM = java.util.Calendar.getInstance().getTime();
+                reportDateMonth = dfm.format(todayM);
+                sharedPref.edit().putString("montho" + i, reportDateMonth).apply();
 
 
-            String stringDateY = sharedPref.getString("yearo" + i, null);
-            String stringDateM = sharedPref.getString("montho" + i, null);
-            String stringDateD = sharedPref.getString("tomato23" + i, null);
-
-            int year = Integer.parseInt(stringDateY);
-
-            int month = Integer.parseInt(stringDateM) - 1;
-
-            //   System.out.println(day);
-
-            //  DateFormat format = new SimpleDateFormat("MMMM d, yyyy");
-
-            checkin = sharedPref.getBoolean("keyo " + c, false);
-            System.out.println("this is c    " + c);
-            System.out.println("At this point    " + checkin);
-            Boolean row5 = sharedPref.getBoolean("row" + c, false);
+                DateFormat dfd = new SimpleDateFormat("d");
+                Date todayD = java.util.Calendar.getInstance().getTime();
+                reportDateDay = dfd.format(todayD);
+                sharedPref.edit().putString("tomato23" + i, reportDateDay).apply();
 
 
-            MaterialCalendarView materialCalendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+                String stringDateY = sharedPref.getString("yearo" + i, null);
+                String stringDateM = sharedPref.getString("montho" + i, null);
+                String stringDateD = sharedPref.getString("tomato23" + i, null);
+
+                int year = Integer.parseInt(stringDateY);
+
+                int month = Integer.parseInt(stringDateM) - 1;
+
+                //   System.out.println(day);
+
+                //  DateFormat format = new SimpleDateFormat("MMMM d, yyyy");
+
+                checkin = sharedPref.getBoolean("keyo " + c, false);
+                System.out.println("this is c    " + c);
+                System.out.println("At this point    " + checkin);
+                Boolean row5 = sharedPref.getBoolean("row" + c, false);
 
 
-            HashSet<CalendarDay> dates = new HashSet<CalendarDay>();
-            HashSet<CalendarDay> dates2 = new HashSet<CalendarDay>();
+                MaterialCalendarView materialCalendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
 
 
-            sharedPref.edit().putString("dateAgain", stringDateD).apply();
-
-            while (stringDateD != null) {
-
+                HashSet<CalendarDay> dates = new HashSet<CalendarDay>();
+                HashSet<CalendarDay> dates2 = new HashSet<CalendarDay>();
 
 
+                sharedPref.edit().putString("dateAgain", stringDateD).apply();
+
+                while (stringDateD != null) {
 
 
+                    System.out.println("i second time  " + i);
 
 
-                System.out.println("i second time  " + i);
+                    System.out.println("stringDateIstringDateIstringDateI   " + stringDateD);
 
 
+                    checkin = sharedPref.getBoolean("keyo " + c, false);  //save wheather smiley or angry
+                    stringDateD = sharedPref.getString("tomato23" + i, null);
+                    if (stringDateD == null) {
 
-                System.out.println("stringDateIstringDateIstringDateI   " + stringDateD);
+                    } else {
 
-
-
-
-                checkin = sharedPref.getBoolean("keyo " + c, false);  //save wheather smiley or angry
-                stringDateD = sharedPref.getString("tomato23" + i, null);
-                if (stringDateD == null) {
-
-                } else {
-
-                    System.out.println(stringDateD);
-                    int k = 0;
+                        System.out.println(stringDateD);
+                        int k = 0;
 
 
-                    if (checkin == true) {
+                        if (checkin == true) {
 
 
-                        int day = Integer.parseInt(stringDateD);
-                        CalendarDay calendarDay = CalendarDay.from(year, month, day);
-                        dates.add(calendarDay);
+                            int day = Integer.parseInt(stringDateD);
+                            CalendarDay calendarDay = CalendarDay.from(year, month, day);
+                            dates.add(calendarDay);
 
-                        System.out.println(checkin);
-
-
-                        EventDecorator2 eventDecorator = new EventDecorator2(getResources().getColor(R.color.colorGreen), dates, this);
-                        materialCalendarView.addDecorator(eventDecorator);
-
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 20s
-                                // Write your code to display AlertDialog here
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Calendar.this);
-                        builder.setMessage("Congratukations you Made it!")
-                                .setCancelable(false)
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        Intent j=new Intent(Calendar.this, FirstAcivity.class);  // Warum funktioniert hier nicht nur ledglich THIS ANZUGEBEN?
-                                        //       j.putExtra("output", newValue);
+                            System.out.println(checkin);
 
 
-                                        j.putExtra("use",true);
-                                        startActivity(j);
-                                    }
-                                });
-                        AlertDialog alert = builder.create();
-                        alert.show();
-                            }
-                        }, 2000);
+                            EventDecorator2 eventDecorator = new EventDecorator2(getResources().getColor(R.color.colorGreen), dates, this);
+                            materialCalendarView.addDecorator(eventDecorator);
+
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 20s
+                                    // Write your code to display AlertDialog here
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(Calendar.this);
+                                    builder.setMessage("Congratukations you Made it!")
+                                            .setCancelable(false)
+                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    Intent j = new Intent(Calendar.this, FirstAcivity.class);  // Warum funktioniert hier nicht nur ledglich THIS ANZUGEBEN?
+                                                    //       j.putExtra("output", newValue);
+
+
+                                                    j.putExtra("use", true);
+                                                    startActivity(j);
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+                                }
+                            }, 2000);
                  /*       new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -410,47 +637,46 @@ materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
                         }, 2500);  */
 
 
-                    } else {
+                        } else {
 
 
-                        int day = Integer.parseInt(stringDateD);
-                        CalendarDay calendarDay2 = CalendarDay.from(year, month, day);
-                        dates2.add(calendarDay2);
+                            int day = Integer.parseInt(stringDateD);
+                            CalendarDay calendarDay2 = CalendarDay.from(year, month, day);
+                            dates2.add(calendarDay2);
 
 
-                        System.out.println(checkin);
-                        EventDecorator eventDecorator2 = new EventDecorator(getResources().getColor(R.color.colorRed), dates2, this);
-                        materialCalendarView.addDecorator(eventDecorator2);
+                            System.out.println(checkin);
+                            EventDecorator eventDecorator2 = new EventDecorator(getResources().getColor(R.color.colorRed), dates2, this);
+                            materialCalendarView.addDecorator(eventDecorator2);
 
 
-                        //     materialCalendarView.addDecorator(new CurrentDateDecorator(this));
+                            //     materialCalendarView.addDecorator(new CurrentDateDecorator(this));
 
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 20s
-                                // Write your code to display AlertDialog here
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 20s
+                                    // Write your code to display AlertDialog here
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Calendar.this);
-                                builder.setMessage("Marta te quiero!  Dont give up")
-                                        .setCancelable(false)
-                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                Intent j=new Intent(Calendar.this, FirstAcivity.class);  // Warum funktioniert hier nicht nur ledglich THIS ANZUGEBEN?
-                                                //       j.putExtra("output", newValue);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(Calendar.this);
+                                    builder.setMessage("Marta te quiero!  Dont give up")
+                                            .setCancelable(false)
+                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    Intent j = new Intent(Calendar.this, FirstAcivity.class);  // Warum funktioniert hier nicht nur ledglich THIS ANZUGEBEN?
+                                                    //       j.putExtra("output", newValue);
 
 
-                                                j.putExtra("use",true);
-                                                startActivity(j);
-                                            }
-                                        });
-                                AlertDialog alert = builder.create();
-                                alert.show();
-                            }
-                        }, 2000);
-                    }
-
+                                                    j.putExtra("use", true);
+                                                    startActivity(j);
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+                                }
+                            }, 2000);
+                        }
 
 
                         i--;
@@ -459,14 +685,6 @@ materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
 
                     }  /*
                     }  */
-
-
-
-
-
-
-
-
 
 
                 }
@@ -478,11 +696,6 @@ materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
                 stringDateD = null;
             }
 */
-
-
-
-
-
 
 
                 //       checkin = sharedPref.getBoolean("keyo " + c, false);
@@ -547,41 +760,33 @@ materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
         }   */
 
 
-
-
-
-
-
-
             }
 
         }
 
 
+        @Override
+        public void onBackPressed ()
+        {
+            // code here to show dialog
+            super.onBackPressed();
+
+            SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+            sharedPref.edit().putBoolean("setI", true).apply();
+            String stringDateD = sharedPref.getString("tomato23" + i, null);
 
 
-   @Override
-    public void onBackPressed()
-    {
-        // code here to show dialog
-        super.onBackPressed();
-
-        SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
-        sharedPref.edit().putBoolean("setI", true).apply();
-     String    stringDateD = sharedPref.getString("tomato23" + i, null);
+            System.out.println(stringDateD);
 
 
-        System.out.println(stringDateD);
-
-
-try {
-    MainActivity.falsecheckBox.setChecked(false);
-    MainActivity.checkBox.setChecked(false);
-    MainActivity.falsecheckBox.setEnabled(true);
-    MainActivity.checkBox.setEnabled(true);
-} catch (NullPointerException e){
-    System.out.println("Caught u too :)");
-}
+            try {
+                MainActivity.falsecheckBox.setChecked(false);
+                MainActivity.checkBox.setChecked(false);
+                MainActivity.falsecheckBox.setEnabled(true);
+                MainActivity.checkBox.setEnabled(true);
+            } catch (NullPointerException e) {
+                System.out.println("Caught u too :)");
+            }
 
 
 
@@ -612,5 +817,56 @@ try {
         }
 
         System.out.println("I Love you !!!"   + i); // optional depending on your needs  */
-    }}
+        }
+
+
+
+    //  Button button = (Button) findViewById(R.id.button);
+
+
+    public void addTextClick(View view){
+
+
+        if (addText == true){
+
+
+
+
+
+
+
+        //    String text = sharedPref.getString("text" + intText, null);         // text
+
+         //   String pupu = sharedPref.getString("date" + increment, null);        // you have the date
+
+
+            Intent intent = new Intent(this, AddText.class);
+
+startActivity(intent);
+}
+
+        }
+
+    static String increments(String s) {
+        Matcher m = NUMBER_PATTERN.matcher(s);
+        if (!m.find())
+            throw new NumberFormatException();
+        String num = m.group();
+        int inc = Integer.parseInt(num) + 1;
+        String incStr = String.format("%0" + num.length() + "d", inc);
+        return  m.replaceFirst(incStr);
+    }
+
+
+    public void testIncrementString() {
+        System.out.println(increments("ABC123"));  // -> ABC124
+        System.out.println(increments("Z00000"));  // -> Z00001
+        System.out.println(increments("AB05YZ"));  // -> AB06YZ
+    }
+
+
+}
+
+
+
 

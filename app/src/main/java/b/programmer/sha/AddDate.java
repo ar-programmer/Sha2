@@ -86,11 +86,7 @@ public class AddDate extends AppCompatActivity {
 
     public void onCheckBoxClick(View view) {
 
-
-
         SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
-
-
 
         c = sharedPref.getInt("nuevo", 0);  // get stored int Value
 
@@ -99,7 +95,6 @@ public class AddDate extends AppCompatActivity {
 
         sharedPref.edit().putInt("nuevo", c).apply();   // save the new value
 
-
         i = sharedPref.getInt("loud", 0);
 
 
@@ -107,14 +102,7 @@ public class AddDate extends AppCompatActivity {
 
         i++;
 
-
-
         sharedPref.edit().putInt("loud", i).apply();
-
-
-
-
-
 
 
 
@@ -124,8 +112,6 @@ public class AddDate extends AppCompatActivity {
 
 
         sharedPref.edit().putBoolean("afterAddDate", true).apply();
-
-
 
 
 

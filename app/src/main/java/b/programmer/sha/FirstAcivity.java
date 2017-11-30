@@ -3,6 +3,7 @@ package b.programmer.sha;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,7 +29,9 @@ public class FirstAcivity extends Activity {
         arrow.setImageResource(R.drawable.arrow);
 
 
+        ImageView plusIcon = (ImageView) findViewById(R.id.addNote);
 
+        plusIcon.setImageResource(R.drawable.plus_icon);
 
     }
 
@@ -50,4 +53,19 @@ public class FirstAcivity extends Activity {
         startActivity(j);
 
     }
+
+    public void onAddNoteClick(View view) {
+
+        SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+     int   i = sharedPref.getInt("IAddText", 0);  // get stored int Value
+
+        i++;                                   // add one to the stored Value
+
+        Intent j = new Intent(this, AddNoteActivity.class);  // Warum funktioniert hier nicht nur ledglich THIS ANZUGEBEN?
+        //       j.putExtra("output", newValue);
+
+        startActivity(j);
+
+    }
+
 }

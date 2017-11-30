@@ -27,7 +27,19 @@
         android:id="@+id/imageView"
 
         android:onClick="onCalendarClick"
-              />
+        />
+
+
+    <ImageView
+        android:layout_below="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/addNote"
+
+        android:onClick="onAddNoteClick"
+        />
+
 
 
 
