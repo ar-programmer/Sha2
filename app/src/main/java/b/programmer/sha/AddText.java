@@ -55,7 +55,7 @@ public class AddText extends AppCompatActivity {
         sharedPref.edit().putString("textBefore" + lolo, juju).apply();
 
 
-        lolo++;
+   //     lolo++;
 
         System.out.println(lolo + " the addText Activity");
 

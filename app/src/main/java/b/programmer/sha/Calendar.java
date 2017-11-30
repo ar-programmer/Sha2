@@ -36,6 +36,9 @@ import java.util.regex.Pattern;
  */
 
 public class Calendar extends AppCompatActivity {
+
+
+    boolean pressedNext = false;
     String     samba2, samba3;
     boolean addText = false;
     int year_x, month_x, day_x;
@@ -55,7 +58,6 @@ public class Calendar extends AppCompatActivity {
 
     String stringDate2;
 
-    Date date = new Date();
 
     int i = 0;
 
@@ -99,7 +101,7 @@ public class Calendar extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
 
 
-        int increment =   sharedPref.getInt("increment", 0);
+
 
         System.out.println("huhu" + increment);
 
@@ -281,68 +283,104 @@ if (increment == 4) {
                     SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
                     TextView textView = (TextView) findViewById(R.id.showText);
 
-                    int increment = sharedPref.getInt("increment", 0);
-
-                    if (increment == 1) {
-
-                        koko = String.valueOf(date);
-                        sharedPref.edit().putString("BeforeIncrementdate", koko).apply();
-                        samba = sharedPref.getString("BeforeIncrementdate", null);
+                    increment = sharedPref.getInt("increment", 0);
+                    int j = sharedPref.getInt("increment", 0);
+                    diJaneiro = sharedPref.getString("textBefore" + increment, null);
 
 
-                        diJaneiro = sharedPref.getString("textBefore" + increment, null);
+                    if (pressedNext == true){
+
+                        System.out.println(increment);
+                           sharedPref.edit().putString("BeforeIncrementdate" + increment, String.valueOf(date)).apply();
+
+                            System.out.println("value date in addText"   +String.valueOf(date));
+
+                            pressedNext = false;
 
 
-                        System.out.println(samba + "     I am koko");
+                    }
+
                         System.out.println(diJaneiro + "     I am diJaneiro");
 
-                        textView.setText(diJaneiro);
+               //         textView.setText(diJaneiro);
 
-                    }
-
-
-                    if (increment == 3) {
-
-                        moko = String.valueOf(date);
-                        sharedPref.edit().putString("BeforeIncrementdate", moko).apply();
-                        samba = sharedPref.getString("BeforeIncrementdate", null);
+           //      samba = sharedPref.getString("BeforeIncrementdate" + increment, null);  //samba is equal to all the increment
 
 
-                        miJaneiro = sharedPref.getString("textBefore" + increment, null);
-
-
-
-                        System.out.println(samba + "     I am koko");
-                        System.out.println(miJaneiro + "     I am diJaneiro");
-
-                        textView.setText(miJaneiro);
-
-                    } else {
-                        textView.setText(null);
-                    }
-
-                    System.out.println(" String value of date        " + String.valueOf(date));
-                    System.out.println(" koko jambo        " + koko);
-
-                    if (String.valueOf(date).equals(koko)) {
-                        System.out.println("HelloAgain");
-                        textView.setText(diJaneiro);
-                    }
-
-                    if (String.valueOf(date).equals(moko)) {
-                        System.out.println("HelloAgain");
-                        textView.setText(miJaneiro);
-                    }
-                    // YOU HAVE TO PROGRAMM   IF  A NEW DAY IS CLICKED THAT DOES NOT MATCH THE SAVED ONE INCREMENT
 
 
                     addText = true;
 
 
-                    increment++;
+                  for(int increment = 0; increment <= j; increment++)  {
 
 
-                    sharedPref.edit().putInt("increment", increment).apply();
+                      System.out.println(j);
+
+                   //   increment = 1;
+
+
+                  //    increment = sharedPref.getInt("increment", 0);
+
+
+                      samba = sharedPref.getString("BeforeIncrementdate" + increment, null);
+                      System.out.println("What is increment      " + increment);
+                      System.out.println(increment);
+
+                        if (String.valueOf(date).equals(samba)) {
+
+                            System.out.println("did u get in here ???" + samba);
+                            diJaneiro = sharedPref.getString("textBefore" + increment, null);
+                            textView.setText(diJaneiro);
+                            break;
+                        } else {
+                            textView.setText(null);
+                        }
+
+                    }
+
+
+
+
+         /*           while (increment != 0) {
+
+                        increment = 0;
+
+
+                        samba = sharedPref.getString("BeforeIncrementdate" + increment, null);
+
+                        if (String.valueOf(date).equals(samba)) {
+                            System.out.println("did u get in here ???" + samba);
+                            //       textView.setText(diJaneiro);
+                        }
+
+                        if (String.valueOf(date).equals(null)) {
+                            increment = 0;
+                            System.out.println("you see now it is null   ");
+                        }
+
+                    }    */
+
+            /*        if (String.valueOf(date).equals(moko)) {
+                        System.out.println("HelloAgain");
+                        textView.setText(miJaneiro);
+                    }  */
+                    // YOU HAVE TO PROGRAMM   IF  A NEW DAY IS CLICKED THAT DOES NOT MATCH THE SAVED ONE INCREMENT
+
+
+
+
+
+
+
+
+
+
+          //        increment = 0;
+         //           samba = sharedPref.getString("BeforeIncrementdate" + increment, null);
+
+           //         System.out.println("showuld be the first date    " + samba);
+           //         System.out.println("is it 0???  " + increment);
 
 
                 } });
@@ -827,9 +865,24 @@ if (increment == 4) {
     public void addTextClick(View view){
 
 
+        if (addText == false){
+            increment = 0;
+            SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+            sharedPref.edit().putInt("increment", increment).apply();
+        }
+
+
+
         if (addText == true){
 
+             pressedNext = true;
 
+            SharedPreferences sharedPref = getSharedPreferences("sharePref", MODE_PRIVATE);
+
+            increment++;
+            sharedPref.edit().putInt("increment", increment).apply();
+
+            System.out.println("Increment in addText"   +increment);
 
 
 
